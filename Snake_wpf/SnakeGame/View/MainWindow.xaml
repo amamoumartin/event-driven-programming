@@ -1,0 +1,56 @@
+﻿<Window x:Class="SnakeGame.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SnakeGame"
+        mc:Ignorable="d"
+        Title="SnakeGame" Height="600" Width="600">
+    <Grid ShowGridLines="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="File">
+                    <MenuItem Header="New game">
+                        <Separator />
+                        <MenuItem Header="10x10" IsCheckable="True" Command="{Binding New10x10GameCommand}"/>
+                        <MenuItem Header="15x15" IsCheckable="True" Command="{Binding New15x15GameCommand}"/>
+                        <MenuItem Header="20x20" IsCheckable="True" Command="{Binding New20x20GameCommand}"/>
+                    </MenuItem>
+                    <MenuItem Header="Exit" Command="{Binding ExitGameCommand}"/>
+                </MenuItem>
+                <MenuItem Header="Score:"></MenuItem>
+                <MenuItem Header="{Binding GameScore}" ></MenuItem>
+            </Menu>
+        </DockPanel>
+        <ItemsControl Grid.Row="1"  ItemsSource="{Binding Fields}">
+            <ItemsControl.ItemsPanel >
+                <ItemsPanelTemplate>
+                    <UniformGrid  Rows="{Binding Size}"
+                                     Columns="{Binding Size}">
+                    </UniformGrid>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button  IsHitTestVisible="False" BorderBrush="Black" BorderThickness="2" Background="{Binding Color}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Grid.Row" Value="{Binding X}" />
+                    <Setter Property="Grid.Column" Value="{Binding Y}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
+        <StatusBar Grid.Row="2">
+            <Menu>
+                <MenuItem Header="To Start/Stop the game: press ENTER/SPACE,to change the direction of the snake: use the arrow/WASD keys" Height="16"/>
+            </Menu>
+        </StatusBar>
+    </Grid>
+</Window>
